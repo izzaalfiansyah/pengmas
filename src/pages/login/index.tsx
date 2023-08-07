@@ -1,6 +1,7 @@
 import http from "@/libs/http";
 import { useLoading } from "@/contexts/loading-context";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function () {
   const [email, setEmail] = useState("");
@@ -8,12 +9,13 @@ export default function () {
   const [error, setError] = useState<any>({});
 
   const loading = useLoading();
+  const router = useRouter();
 
   const login = async () => {
     try {
       const res = await http().post("/login", { email, password });
-      setError({});
-      alert(JSON.stringify(res.data));
+      localStorage.setItem("_token", res.data.data);
+      router.replace("/admin");
     } catch (err: any) {
       setError(err);
     }
@@ -26,7 +28,7 @@ export default function () {
 
   return (
     <div className="min-h-screen bg-white flex text-gray-700">
-      <div className="grow flex-1 lg:flex justify-center items-end hidden border-r">
+      <div className="grow flex-1 lg:flex justify-center items-end hidden border-r bg-gray-50 bg-opacity-50">
         <img
           src="https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-2/assets/auth-v2-login-illustration-bordered-light-47ee3625.png"
           alt="Login SVG"

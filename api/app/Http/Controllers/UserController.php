@@ -33,4 +33,11 @@ class UserController extends Controller
 
         return UserResource::collection($data);
     }
+
+    function show($id)
+    {
+        $item = User::find($id);
+
+        return new UserResource($item);
+    }
 }
