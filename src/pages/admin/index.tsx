@@ -12,6 +12,7 @@ export default function () {
   const [chart, setChart] = useState<Chart>();
   const [kondisi, setKondisi] = useState<any>();
   const [perangkat_id, setPerangkat_id] = useState("0");
+  const [isError, setIsError] = useState(false);
 
   const loading = useLoading();
 
@@ -25,7 +26,7 @@ export default function () {
         labels: [],
         datasets: [
           {
-            label: "Ketinggian Air",
+            label: "cm",
             data: [],
             fill: true,
             borderColor: "#7367f0",
@@ -60,14 +61,15 @@ export default function () {
     setChart(ch);
   };
 
-  const getData = () => {
-    http()
+  const getData = async () => {
+    await http()
       .get("/air/latest", {
         params: {
           perangkat_id,
         },
       })
       .then((res) => {
+        setIsError(false);
         setKondisi(res.data);
 
         chart?.data.labels?.push(res.data.waktu);
@@ -80,7 +82,7 @@ export default function () {
         chart?.update();
       })
       .catch((e) => {
-        alert("Gagal mengambil data ketinggian air");
+        setIsError(true);
       });
   };
 
@@ -92,13 +94,13 @@ export default function () {
 
   useEffect(() => {
     render();
-    loading?.show(
-      () =>
-        new Promise((res) => {
-          setTimeout(() => res(true), 1200);
-        })
-    );
   }, []);
+
+  useEffect(() => {
+    if (chart) {
+      loading?.show(getData);
+    }
+  }, [chart, perangkat_id]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -110,6 +112,13 @@ export default function () {
 
   return (
     <AdminLayout title="Dashboard">
+      {isError && (
+        <div className="mb-4">
+          <div className="bg-red-100 text-red-400 border border-red-300 rounded text-sm p-4">
+            Terjadi kesalahan, Gagal mengambil data kondisi air.
+          </div>
+        </div>
+      )}
       <div className="flex lg:flex-row flex-col gap-x-5">
         <div className="lg:w-2/5">
           <Card title="Pilihan Perangkat">

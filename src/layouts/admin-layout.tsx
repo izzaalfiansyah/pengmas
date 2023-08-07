@@ -44,7 +44,7 @@ export default function (props: Props) {
   return (
     <>
       <Head>
-        <title>Pengmas - {props.title}</title>
+        <title>Pengmas - Admin</title>
       </Head>
       <div className="bg-white min-h-screen">
         <div className="min-h-screen bg-gray-50 bg-opacity-50 text-gray-700 flex">
