@@ -40,7 +40,7 @@ export default function LoadingProvider(props: { children: any }) {
     <LoadingContext.Provider value={value}>
       <div className="fixed top-0 left-0 right-0 z-[99999]">
         <div
-          className="bg-purple-600 h-[2.3px]"
+          className="bg-primary h-[3px] shadow shadow-white"
           style={{
             width: width + "%",
             opacity: opacity,

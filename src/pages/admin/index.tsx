@@ -29,8 +29,8 @@ export default function () {
             label: "cm",
             data: [],
             fill: true,
-            borderColor: "#7367f0",
-            backgroundColor: "rgba(115,103,240,0.05)",
+            borderColor: "#fbbc04",
+            backgroundColor: "rgba(251,188,4,0.05)",
             tension: 0.1,
           },
         ],
@@ -114,7 +114,7 @@ export default function () {
     <AdminLayout title="Dashboard">
       {isError && (
         <div className="mb-4">
-          <div className="bg-red-100 text-red-400 border border-red-300 rounded text-sm p-4">
+          <div className="bg-orange-100 text-orange-400 border border-orange-300 rounded text-sm p-4">
             Terjadi kesalahan, Gagal mengambil data kondisi air.
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function () {
         <div className="lg:w-2/5">
           <Card title="Pilihan Perangkat">
             <select
-              className="rounded border border-gray-300 h-10 bg-white px-3 w-full outline-none focus:shadow-sm focus:ring-2 focus:ring-purple-200 focus:border-purple-400 transition disabled:bg-gray-50"
+              className="rounded border border-gray-300 h-10 bg-white px-3 w-full outline-none focus:shadow-sm focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition disabled:bg-gray-50"
               value={perangkat_id}
               onChange={(e) => {
                 setPerangkat_id(e.currentTarget.value);
@@ -140,7 +140,9 @@ export default function () {
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <div className="mb-5 text-gray-800 text-lg">Ketinggian Air</div>
-                <div className="text-3xl mb-3">{kondisi?.ketinggian}</div>
+                <div className="text-3xl mb-3 text-primary">
+                  {kondisi?.ketinggian}
+                </div>
                 <div>
                   status :{" "}
                   <span
@@ -154,7 +156,7 @@ export default function () {
                   </span>
                 </div>
               </div>
-              <div className="rounded-full bg-purple-100 p-3">
+              <div className="rounded-full bg-primary bg-opacity-25 p-3">
                 <ChartBarIcon className="text-primary w-8 h-8" />
               </div>
             </div>
