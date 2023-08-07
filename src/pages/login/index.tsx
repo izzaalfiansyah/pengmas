@@ -1,12 +1,8 @@
-import http from "@/libs/http";
-import { useRequest } from "alova";
 import { useState } from "react";
 
 export default function () {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const { loading } = useRequest(http().Get("/sanctum/csrf-cookie"));
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
