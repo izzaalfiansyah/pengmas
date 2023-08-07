@@ -20,7 +20,7 @@ class AuthController extends Controller
 
         if (count($user) <= 0) {
             return Response::json([
-                'error' => "username tidak ditemukan",
+                'email' => "username tidak ditemukan",
             ], 400);
         }
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
 
         return Response::json([
-            'error' => 'password salah',
+            'password' => 'password salah',
         ], 400);
     }
 

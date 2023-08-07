@@ -10,5 +10,12 @@ export default function () {
     },
   });
 
+  instance.interceptors.response.use(
+    (res) => res,
+    (err) => {
+      throw err.response.data;
+    }
+  );
+
   return instance;
 }
