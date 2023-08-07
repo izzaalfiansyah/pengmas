@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KondisiAirController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\VerifyUser;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/csrf-token', function () {
     return csrf_token();
+});
+
+Route::prefix('/air')->group(function () {
+    Route::get('/latest', [KondisiAirController::class, 'latest']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

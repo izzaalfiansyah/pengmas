@@ -5,14 +5,13 @@ specifiers:
   '@types/node': 20.4.8
   '@types/react': 18.2.18
   '@types/react-dom': 18.2.7
-  alova: ^2.9.3
   autoprefixer: 10.4.14
   axios: ^1.4.0
+  chart.js: ^4.3.3
   next: 13.4.12
   postcss: 8.4.27
   react: 18.2.0
   react-dom: 18.2.0
-  swr: ^2.2.0
   tailwindcss: 3.3.3
   typescript: 5.1.6
 
@@ -21,14 +20,13 @@ dependencies:
   '@types/node': 20.4.8
   '@types/react': 18.2.18
   '@types/react-dom': 18.2.7
-  alova: 2.9.3
   autoprefixer: 10.4.14_postcss@8.4.27
   axios: 1.4.0
+  chart.js: 4.3.3
   next: 13.4.12_biqbaboplfbrettd7655fr4n2y
   postcss: 8.4.27
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  swr: 2.2.0_react@18.2.0
   tailwindcss: 3.3.3
   typescript: 5.1.6
 
@@ -71,6 +69,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: false
+
+  /@kurkle/color/0.3.2:
+    resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
     dev: false
 
   /@next/env/13.4.12:
@@ -220,11 +222,6 @@ packages:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
     dev: false
 
-  /alova/2.9.3:
-    resolution: {integrity: sha512-q2y9sScsp4qakiMaprhvyvnFCIPNFhjmaQzniZsHYtaOlbeigWIih+PicQFTaEt0cwu+tsifoA0uxZOgsX84ww==}
-    engines: {node: '>= 0.12.0'}
-    dev: false
-
   /any-promise/1.3.0:
     resolution: {integrity: sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==}
     dev: false
@@ -319,6 +316,13 @@ packages:
 
   /caniuse-lite/1.0.30001519:
     resolution: {integrity: sha512-0QHgqR+Jv4bxHMp8kZ1Kn8CH55OikjKJ6JmKkZYP1F3D7w+lnFXF70nG5eNfsZS89jadi5Ywy5UCSKLAglIRkg==}
+    dev: false
+
+  /chart.js/4.3.3:
+    resolution: {integrity: sha512-aTk7pBw+x6sQYhon/NR3ikfUJuym/LdgpTlgZRe2PaEhjUMKBKyNaFCMVRAyTEWYFNO7qRu7iQVqOw/OqzxZxQ==}
+    engines: {pnpm: '>=7'}
+    dependencies:
+      '@kurkle/color': 0.3.2
     dev: false
 
   /chokidar/3.5.3:
@@ -897,15 +901,6 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
-  /swr/2.2.0_react@18.2.0:
-    resolution: {integrity: sha512-AjqHOv2lAhkuUdIiBu9xbuettzAzWXmCEcLONNKJRba87WAefz8Ca9d6ds/SzrPc235n1IxWYdhJ2zF3MNUaoQ==}
-    peerDependencies:
-      react: ^16.11.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-      use-sync-external-store: 1.2.0_react@18.2.0
-    dev: false
-
   /tailwindcss/3.3.3:
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
@@ -980,14 +975,6 @@ packages:
       browserslist: 4.21.10
       escalade: 3.1.1
       picocolors: 1.0.0
-    dev: false
-
-  /use-sync-external-store/1.2.0_react@18.2.0:
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /util-deprecate/1.0.2:
