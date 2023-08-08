@@ -29,7 +29,7 @@ class UserController extends Controller
             });
         }
 
-        $data = $builder->paginate($req->limit ?: 10);
+        $data = $builder->orderBy('created_at', 'desc')->paginate($req->limit ?: 10);
 
         return UserResource::collection($data);
     }

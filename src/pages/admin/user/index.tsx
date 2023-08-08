@@ -11,8 +11,10 @@ import EditIcon from "@/components/icons/edit-icon";
 import SearchIcon from "@/components/icons/search-icon";
 import UsersIcon from "@/components/icons/users-icon";
 import WarningIcon from "@/components/icons/warning-icon";
+import Pagination from "@/components/pagination";
 import Table from "@/components/table";
 import { useLoading } from "@/contexts/loading-context";
+import Meta from "@/interfaces/meta";
 import User from "@/interfaces/user";
 import AdminLayout from "@/layouts/admin-layout";
 import http from "@/libs/http";
@@ -21,6 +23,7 @@ import { useEffect, useState } from "react";
 export default function () {
   const loading = useLoading();
   const [items, setItems] = useState<User[]>([]);
+  const [metaItems, setMetaItems] = useState<Meta>();
   const [total, setTotal] = useState({
     total: 0,
     terverifikasi: 0,
@@ -48,6 +51,7 @@ export default function () {
         },
       });
       setItems(res.data.data);
+      setMetaItems(res.data.meta);
     } catch (e: any) {}
   };
 
@@ -70,8 +74,8 @@ export default function () {
               <div className="text-2xl">{total.total}</div>
               <div className="text-sm">Total User</div>
             </div>
-            <div className="rounded-full bg-primary h-16 w-16 flex items-center justify-center bg-opacity-25">
-              <UsersIcon className="w-8 h-8 text-primary" />
+            <div className="rounded-full bg-blue-500 h-16 w-16 flex items-center justify-center bg-opacity-25">
+              <UsersIcon className="w-8 h-8 text-blue-500" />
             </div>
           </div>
         </Card>
@@ -103,38 +107,14 @@ export default function () {
               <div className="text-2xl">{total.pending}</div>
               <div className="text-sm">User Pending</div>
             </div>
-            <div className="rounded-full bg-blue-500 h-16 w-16 flex items-center justify-center bg-opacity-25">
-              <BellIcon className="w-8 h-8 text-blue-500" />
+            <div className="rounded-full bg-primary h-16 w-16 flex items-center justify-center bg-opacity-25">
+              <BellIcon className="w-8 h-8 text-primary" />
             </div>
           </div>
         </Card>
       </div>
       <Card title="Data User">
         <div className="flex lg:flex-row flex-col items-center gap-x-3">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              get();
-            }}
-            className="lg:w-1/2 w-full"
-          >
-            <FormGroup
-              suffix={
-                <button
-                  type="submit"
-                  className="bg-primary h-10 px-3 rounded text-white"
-                >
-                  <SearchIcon className="w-5 h-5" />
-                </button>
-              }
-            >
-              <Input
-                value={q}
-                onChange={(e) => setQ(e.currentTarget.value)}
-                placeholder="Ketikkan Nama..."
-              />
-            </FormGroup>
-          </form>
           <div className="lg:w-1/4 w-full">
             <FormGroup>
               <Select
@@ -187,6 +167,30 @@ export default function () {
               />
             </FormGroup>
           </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              get();
+            }}
+            className="lg:w-1/2 w-full"
+          >
+            <FormGroup
+              suffix={
+                <button
+                  type="submit"
+                  className="bg-primary h-10 px-3 rounded text-white"
+                >
+                  <SearchIcon className="w-5 h-5" />
+                </button>
+              }
+            >
+              <Input
+                value={q}
+                onChange={(e) => setQ(e.currentTarget.value)}
+                placeholder="Ketikkan Nama..."
+              />
+            </FormGroup>
+          </form>
         </div>
 
         <div className="-mx-5 mt-5 overflow-x-auto">
@@ -231,7 +235,7 @@ export default function () {
               <span
                 className={`${
                   [
-                    "bg-blue-200 text-blue-500",
+                    "bg-orange-100 text-orange-500",
                     "bg-green-200 text-green-500",
                     "bg-red-200 text-red-500",
                   ][parseInt(item.status as string)]
@@ -245,6 +249,21 @@ export default function () {
             ])}
           />
         </div>
+        {metaItems && (
+          <div className="mt-5">
+            <div className="flex lg:flex-row flex-col items-center justify-between gap-5">
+              <div className="text-sm">
+                Menampilkan {metaItems?.from || 0} - {metaItems?.to || 0} dari{" "}
+                {metaItems?.total} data
+              </div>
+              <Pagination
+                current={metaItems.current_page}
+                total={metaItems.last_page}
+                onChange={(val) => setPage(val)}
+              />
+            </div>
+          </div>
+        )}
       </Card>
     </AdminLayout>
   );

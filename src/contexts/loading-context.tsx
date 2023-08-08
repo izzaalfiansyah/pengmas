@@ -49,7 +49,9 @@ export default function LoadingProvider(props: { children: any }) {
           }}
         ></div>
       </div>
-      {props.children}
+      <div className={opacity != 0 ? "pointer-events-none" : ""}>
+        {props.children}
+      </div>
     </LoadingContext.Provider>
   );
 }

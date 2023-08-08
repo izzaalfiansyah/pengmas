@@ -5,9 +5,7 @@ import type { AppProps } from "next/app";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <LoadingProvider>
-      <div className="font-[Inter]">
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </LoadingProvider>
   );
 }
