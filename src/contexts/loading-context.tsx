@@ -32,6 +32,7 @@ export default function LoadingProvider(props: { children: any }) {
       await promise();
       await finish();
       setVal(false);
+      return promise;
     },
     value: val,
   };

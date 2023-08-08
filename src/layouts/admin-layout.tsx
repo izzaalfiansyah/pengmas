@@ -94,7 +94,7 @@ export default function (props: Props) {
               </ul>
             </div>
           </div>
-          <div className="grow lg:ml-72 w-full">
+          <div className="grow lg:pl-72 w-full max-w-screen">
             <div className="px-5 py-3 bg-transparent backdrop-blur sticky top-0 left-0 right-0">
               <div className="bg-white rounded-lg shadow h-16 flex items-center justify-between px-5">
                 <div className="flex">

@@ -29,7 +29,7 @@ class UserController extends Controller
             });
         }
 
-        $data = $builder->paginate(10);
+        $data = $builder->paginate($req->limit ?: 10);
 
         return UserResource::collection($data);
     }
@@ -39,5 +39,22 @@ class UserController extends Controller
         $item = User::find($id);
 
         return new UserResource($item);
+    }
+
+    function total()
+    {
+        $total = User::count();
+        $terverifikasi = User::where('status', '1')->count();
+        $pending = User::where('status', '0')->count();
+        $ditolak = User::where('status', '2')->count();
+
+        return [
+            'data' => [
+                'total' => $total,
+                'terverifikasi' => $terverifikasi,
+                'pending' => $pending,
+                'ditolak' => $ditolak,
+            ]
+        ];
     }
 }

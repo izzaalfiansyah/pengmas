@@ -27,8 +27,13 @@ Route::prefix('/air')->group(function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware(VerifyUser::class)->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [AuthController::class, 'profile']);
-    Route::resource('/user', UserController::class);
+// Route::middleware(VerifyUser::class)->group(function () {
+Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/profile', [AuthController::class, 'profile']);
+Route::resource('/user', UserController::class);
+
+Route::prefix('/total')->group(function () {
+    Route::get('/user', [UserController::class, 'total']);
 });
+
+// });
