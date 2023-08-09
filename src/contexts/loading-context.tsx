@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-export const LoadingContext = createContext<{
+const LoadingContext = createContext<{
   value: boolean;
   show: (promise: () => Promise<any>) => any;
 } | null>(null);

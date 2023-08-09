@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use Nette\Utils\Random;
 
 class AuthController extends Controller
 {
@@ -56,8 +56,19 @@ class AuthController extends Controller
         ]);
     }
 
-    function profile()
+    function profile(Request $req)
     {
-        return new UserResource(Auth::user());
+        try {
+            $token = explode(' ', $req->header('Authorization'))[1];
+            $user = User::where('remember_token', $token)->first();
+
+            if ($user) {
+                return new UserResource($user);
+            }
+
+            return [];
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 }
