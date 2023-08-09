@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const LoadingContext = createContext<{
   value: boolean;
@@ -17,12 +17,6 @@ export default function LoadingProvider(props: { children: any }) {
 
   const finish = async () => {
     setWidth(100);
-    setTimeout(() => {
-      setOpacity(0);
-      setTimeout(() => {
-        setWidth(0);
-      }, 500);
-    }, 500);
   };
 
   const value = {
@@ -36,6 +30,19 @@ export default function LoadingProvider(props: { children: any }) {
     },
     value: val,
   };
+
+  useEffect(() => {
+    if (width == 100) {
+      const timeout = setTimeout(() => {
+        setOpacity(0);
+        setTimeout(() => {
+          setWidth(0);
+        }, 500);
+      }, 500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [width]);
 
   return (
     <LoadingContext.Provider value={value}>

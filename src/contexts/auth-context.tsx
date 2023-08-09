@@ -68,7 +68,7 @@ export default function AuthProvider(props: { children: ReactNode }) {
           <div className="rounded-full animate animate-pulse bg-primary h-8 w-8"></div>
         </div>
       )}
-      {props.children}
+      {!isLoading && props.children}
     </AuthContext.Provider>
   );
 }

@@ -15,6 +15,7 @@ import WarningIcon from "@/components/icons/warning-icon";
 import Pagination from "@/components/pagination";
 import Table from "@/components/table";
 import { useLoading } from "@/contexts/loading-context";
+import { useNotif } from "@/contexts/notif-context";
 import Meta from "@/interfaces/meta";
 import User from "@/interfaces/user";
 import AdminLayout from "@/layouts/admin-layout";
@@ -23,6 +24,8 @@ import { useEffect, useState } from "react";
 
 export default function () {
   const loading = useLoading();
+  const notif = useNotif();
+
   const [items, setItems] = useState<User[]>([]);
   const [metaItems, setMetaItems] = useState<Meta>();
   const [total, setTotal] = useState({
@@ -43,18 +46,16 @@ export default function () {
 
   const getUser = async () => {
     try {
-      loading?.show(async () => {
-        const res = await http().get("/user", {
-          params: {
-            q,
-            role,
-            status,
-            page,
-          },
-        });
-        setItems(res.data.data);
-        setMetaItems(res.data.meta);
+      const res = await http().get("/user", {
+        params: {
+          q,
+          role,
+          status,
+          page,
+        },
       });
+      setItems(res.data.data);
+      setMetaItems(res.data.meta);
     } catch (e: any) {}
   };
 
@@ -63,6 +64,7 @@ export default function () {
       item.status = status as any;
       const res = await http().put("/user/" + item.id, item);
       loading.show(getUser);
+      notif?.show("status pengguna berhasil diubah");
     });
   };
 
