@@ -2,6 +2,7 @@ import Card from "@/components/card";
 import FormGroup from "@/components/form/form-group";
 import Input from "@/components/form/input";
 import Select from "@/components/form/select";
+import Switch from "@/components/form/switch";
 import ArrowTrendDown from "@/components/icons/arrow-trend-down";
 import BellIcon from "@/components/icons/bell-icon";
 import BuoyIcon from "@/components/icons/buoy-icon";
@@ -42,27 +43,35 @@ export default function () {
 
   const getUser = async () => {
     try {
-      const res = await http().get("/user", {
-        params: {
-          q,
-          role,
-          status,
-          page,
-        },
+      loading?.show(async () => {
+        const res = await http().get("/user", {
+          params: {
+            q,
+            role,
+            status,
+            page,
+          },
+        });
+        setItems(res.data.data);
+        setMetaItems(res.data.meta);
       });
-      setItems(res.data.data);
-      setMetaItems(res.data.meta);
     } catch (e: any) {}
   };
 
-  const get = () => loading?.show(getUser);
+  const verifyUser = (item: User, status: string) => {
+    loading?.show(async () => {
+      item.status = status as any;
+      const res = await http().put("/user/" + item.id, item);
+      loading.show(getUser);
+    });
+  };
 
   useEffect(() => {
     getTotal();
   }, []);
 
   useEffect(() => {
-    get();
+    loading?.show(getUser);
   }, [role, status, page]);
 
   return (
@@ -170,7 +179,7 @@ export default function () {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              get();
+              loading?.show(getUser);
             }}
             className="lg:w-1/2 w-full"
           >
@@ -201,7 +210,7 @@ export default function () {
               "Alamat",
               "Telepon",
               "Status",
-              "Opsi",
+              "Verifikasi",
             ]}
             items={items.map((item) => [
               <div>
@@ -243,9 +252,12 @@ export default function () {
               >
                 {item.status_detail}
               </span>,
-              <button className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-50 transition mr-3">
-                <EditIcon className="w-5 h-5" />
-              </button>,
+              <Switch
+                checked={item.status == "1"}
+                onChange={(e) =>
+                  verifyUser(item, e.currentTarget.checked ? "1" : "2")
+                }
+              />,
             ])}
           />
         </div>

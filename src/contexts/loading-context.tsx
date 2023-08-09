@@ -8,7 +8,7 @@ export const LoadingContext = createContext<{
 export default function LoadingProvider(props: { children: any }) {
   const [val, setVal] = useState(false);
   const [width, setWidth] = useState(0);
-  const [opacity, setOpacity] = useState(1);
+  const [opacity, setOpacity] = useState(0);
 
   const start = async () => {
     setOpacity(1);

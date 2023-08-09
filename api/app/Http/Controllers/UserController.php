@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -37,6 +39,39 @@ class UserController extends Controller
     function show($id)
     {
         $item = User::find($id);
+
+        return new UserResource($item);
+    }
+
+    function store(UserRequest $req)
+    {
+        $data = $req->validated();
+        $data['password'] = Hash::make($req->password);
+
+        $item = User::create($data);
+
+        return new UserResource($item);
+    }
+
+    function update(UserRequest $req, $id)
+    {
+        $item = User::find($id);
+        $data = $req->validated();
+
+        unset($data['password']);
+        if ($req->password) {
+            $data['password'] = Hash::make($req->password);
+        }
+
+        $item?->update($data);
+
+        return new UserResource($item);
+    }
+
+    function destroy($id)
+    {
+        $item = User::find($id);
+        $item?->delete();
 
         return new UserResource($item);
     }
