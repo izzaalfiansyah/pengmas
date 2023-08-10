@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Nette\Utils\Random;
+use PhpParser\Node\Expr\Cast\String_;
 
 class UserController extends Controller
 {
@@ -91,10 +93,11 @@ class UserController extends Controller
     function store(UserRequest $req)
     {
         $data = $req->validated();
+        $data['id_pengguna'] = "P-" . Random::generate(5);
 
-        $item = DB::table('akun')->insert($data);
+        DB::table('akun')->insert($data);
 
-        return new UserResource($item);
+        return true;
     }
 
     // function update(UserRequest $req, $id)
@@ -120,11 +123,9 @@ class UserController extends Controller
             unset($req->password);
         }
 
-        $item = DB::table('akun')->where('id_pengguna', $id)->first();
+        DB::table('akun')->where('id_pengguna', $id)->update($data);
 
-        $item?->update($data);
-
-        return new UserResource($item);
+        return true;
     }
 
     // function destroy($id)
@@ -137,11 +138,9 @@ class UserController extends Controller
 
     function destroy($id)
     {
-        $item = DB::table('akun')->where('id_pengguna', $id)->first();
+        DB::table('akun')->where('id_pengguna', $id)->delete();
 
-        $item?->delete();
-
-        return new UserResource($item);
+        return true;
     }
 
     // function total()
