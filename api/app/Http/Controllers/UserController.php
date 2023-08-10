@@ -120,7 +120,7 @@ class UserController extends Controller
         $data = $req->validated();
 
         if ($req->password == null) {
-            unset($req->password);
+            unset($data['password']);
         }
 
         DB::table('akun')->where('id_pengguna', $id)->update($data);
