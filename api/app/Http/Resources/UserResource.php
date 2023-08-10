@@ -14,16 +14,25 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // return [
+        //     'id' => $this->id,
+        //     'nama' => $this->nama,
+        //     'email' => $this->email,
+        //     'telepon' => $this->telepon,
+        //     'alamat' => $this->alamat,
+        //     'role' => $this->role,
+        //     'role_detail' => [1 => 'Admin', 'Petugas', 'Korban'][(int)$this->role],
+        //     'status' => $this->status,
+        //     'status_detail' => ['Pending', 'Terverifikasi', 'Ditolak'][(int)$this->status],
+        // ];
+
         return [
-            'id' => $this->id,
-            'nama' => $this->nama,
-            'email' => $this->email,
+            'id' => $this->id_pengguna,
+            'nama' => $this->nama_lengkap,
             'telepon' => $this->telepon,
             'alamat' => $this->alamat,
-            'role' => $this->role,
-            'role_detail' => [1 => 'Admin', 'Petugas', 'Korban'][(int)$this->role],
+            'roles' => $this->roles,
             'status' => $this->status,
-            'status_detail' => ['Pending', 'Terverifikasi', 'Ditolak'][(int)$this->status],
         ];
     }
 }

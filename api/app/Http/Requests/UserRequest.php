@@ -12,13 +12,22 @@ class UserRequest extends FormRequest
         $user = $this->route('user');
 
         return [
-            'nama' => 'required',
-            'email' => ['required', 'email', $user ? Rule::unique('users')->ignore($user) : Rule::unique('users')],
+            'nama_lengkap' => 'required',
             'password' => [Password::min(8), $user ? 'nullable' : 'required'],
             'telepon' => 'required|numeric',
             'alamat' => 'required',
-            'role' => 'nullable|in:1,2,3',
-            'status' => 'nullable|in:1,2,3',
+            'roles' => 'required|in:admin,korban,petugas',
+            'status' => 'required|in:pending,terverifikasi',
         ];
+
+        // return [
+        //     'nama' => 'required',
+        //     'email' => ['required', 'email', $user ? Rule::unique('users')->ignore($user) : Rule::unique('users')],
+        //     'password' => [Password::min(8), $user ? 'nullable' : 'required'],
+        //     'telepon' => 'required|numeric',
+        //     'alamat' => 'required',
+        //     'role' => 'nullable|in:1,2,3',
+        //     'status' => 'nullable|in:1,2,3',
+        // ];
     }
 }
