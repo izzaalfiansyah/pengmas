@@ -1,9 +1,13 @@
+import Card from "@/components/card";
 import LogoutIcon from "@/components/icons/logout-icon";
 import MenuIcon from "@/components/icons/menu-icon";
 import SearchIcon from "@/components/icons/search-icon";
 import stackIcon from "@/components/icons/stack-icon";
 import userIcon from "@/components/icons/user-icon";
 import usersIcon from "@/components/icons/users-icon";
+import { useLoading } from "@/contexts/loading-context";
+import { useModal } from "@/contexts/modal-context";
+import http from "@/libs/http";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -36,9 +40,28 @@ export default function (props: Props) {
   ];
 
   const router = useRouter();
+  const modal = useModal();
+  const loading = useLoading();
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
+  };
+
+  const handleLogout = () => {
+    modal?.show({
+      title: "Logout",
+      message: "Anda yakin akan logout? Sesi anda akan terhapus!",
+      onOk: async () => {
+        await loading?.show(logout);
+        localStorage.removeItem("_token");
+        router.replace("/login");
+      },
+    });
+  };
+
+  const logout = async () => {
+    await http().get("/logout");
+    return true;
   };
 
   return (
@@ -83,13 +106,14 @@ export default function (props: Props) {
                 ))}
 
                 <li className="mb-2">
-                  <a
-                    href="#logout"
-                    className={`rounded hover:bg-gray-50 transition px-4 p-2 block flex items-center`}
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className={`rounded hover:bg-gray-50 transition px-4 p-2 block flex items-center w-full`}
                   >
                     <LogoutIcon className="w-5 h-5 mr-3" />
                     Logout
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
