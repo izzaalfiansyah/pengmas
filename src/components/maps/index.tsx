@@ -16,7 +16,8 @@ interface Props {
 }
 
 export default function (props: Props) {
-  const [map, setMap] = useState<L.Map>();
+  const [maps, setMaps] = useState<L.Map>();
+  const [control, setControl] = useState<any>();
 
   const render = () => {
     const map = L.map("map", {
@@ -27,15 +28,15 @@ export default function (props: Props) {
       zIndex: 5,
     }).addTo(map);
 
-    const lc = (L.control as any)
-      .locate({ initialZoomLevel: 15, drawCircle: false })
-      .addTo(map);
+    if (!maps) {
+      const lc = (L.control as any)
+        .locate({ initialZoomLevel: 15, drawCircle: false })
+        .addTo(map);
 
-    map.on("locationfound", () => {
-      lc.start();
-    });
+      setControl(lc);
+    }
 
-    setMap(map);
+    setMaps(map);
 
     props.markers?.forEach((item) => {
       const circle = L.circle(item.latlng, {
@@ -57,6 +58,14 @@ export default function (props: Props) {
   useEffect(() => {
     render();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (control) {
+        control.stop();
+      }
+    };
+  });
 
   return (
     <div className="w-full">
