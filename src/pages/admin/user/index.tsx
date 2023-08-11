@@ -316,7 +316,9 @@ export default function () {
       });
       setItems(res.data.data);
       setMetaItems(res.data.meta);
-    } catch (e: any) {}
+    } catch (e: any) {
+      notif?.show("Gagal mengambil data", false);
+    }
   };
 
   const verifyUser = (item: User, status: string) => {

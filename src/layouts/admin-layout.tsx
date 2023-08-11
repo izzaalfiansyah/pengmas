@@ -5,6 +5,7 @@ import SearchIcon from "@/components/icons/search-icon";
 import stackIcon from "@/components/icons/stack-icon";
 import userIcon from "@/components/icons/user-icon";
 import usersIcon from "@/components/icons/users-icon";
+import warningIcon from "@/components/icons/warning-icon";
 import { useLoading } from "@/contexts/loading-context";
 import { useModal } from "@/contexts/modal-context";
 import http from "@/libs/http";
@@ -31,6 +32,11 @@ export default function (props: Props) {
       path: "/admin/user",
       title: "Data User",
       icon: usersIcon,
+    },
+    {
+      path: "/admin/bantuan",
+      title: "SOS Bantuan",
+      icon: warningIcon,
     },
     {
       path: "/admin/akun",
@@ -119,7 +125,7 @@ export default function (props: Props) {
             </div>
           </div>
           <div className="grow lg:pl-72 w-full max-w-screen">
-            <div className="px-5 py-3 bg-transparent backdrop-blur sticky top-0 left-0 right-0">
+            <div className="px-5 py-3 bg-transparent backdrop-blur sticky top-0 left-0 right-0 z-[10]">
               <div className="bg-white rounded-lg shadow h-16 flex items-center justify-between px-5">
                 <div className="flex">
                   <button

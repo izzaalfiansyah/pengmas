@@ -11,3 +11,29 @@
 * {
   font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.leaflet-pane {
+  z-index: 5 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 6 !important;
+}
+
+.leaflet-interactive[stroke="red"] {
+  animation: pulsate 1.5s ease-out infinite;
+  opacity: 0.2;
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}

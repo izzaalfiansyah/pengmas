@@ -13,6 +13,9 @@ class BantuanController extends Controller
     function index(Request $req)
     {
         $builder = DB::table('sos_bantuan');
+        $builder = $builder->select('sos_bantuan.*');
+        $builder = $builder->leftJoin(DB::raw('akun pemohon'), 'pemohon.id_pengguna', '=', 'sos_bantuan.id_pemohon');
+        $builder = $builder->leftJoin(DB::raw('akun pengirim'), 'pengirim.id_pengguna', '=', 'sos_bantuan.id_pemohon');
 
         if ($req->id_pemohon != null) {
             $builder = $builder->where('id_pemohon', $req->id_pemohon);
@@ -22,13 +25,19 @@ class BantuanController extends Controller
             $builder = $builder->where('id_pengirim', $req->id_pengirim);
         }
 
+        if ($req->tanggal != null) {
+            $builder = $builder->whereDate('timestamp', $req->tanggal);
+        }
+
         if ($req->q != null) {
             $search = $req->q;
             $builder = $builder->where(function ($query) use ($search) {
                 $query->where('alamat_lokasi', 'like', "%$search%")
                     ->orWhere('lokasi_tambahan', 'like', "%$search%")
                     ->orWhere('jenis_bantuan', 'like', "%$search")
-                    ->orWhere('kebutuhan', 'like', "%$search%");
+                    ->orWhere('kebutuhan', 'like', "%$search%")
+                    ->orWhere('pemohon.nama_lengkap', 'like', "%$search%")
+                    ->orWhere('pengirim.nama_lengkap', 'like', "%$search%");
             });
         }
 

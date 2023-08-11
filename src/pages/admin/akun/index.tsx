@@ -150,7 +150,7 @@ export default function () {
       setRoles(item.roles as string);
       setStatus(item.status as string);
     } catch (e) {
-      alert("Gagal mengambil data");
+      notif?.show("Gagal mengambil data", false);
     }
   };
 

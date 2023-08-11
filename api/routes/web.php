@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BantuanController;
 use App\Http\Controllers\KondisiAirController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\VerifyUser;
@@ -31,6 +32,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/profile', [AuthController::class, 'profile']);
 Route::resource('/user', UserController::class);
+Route::resource('/bantuan', BantuanController::class);
 
 Route::prefix('/total')->group(function () {
     Route::get('/user', [UserController::class, 'total']);
